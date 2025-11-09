@@ -39,3 +39,7 @@ const convert = new JSON2Dts();
 const interfaces = convert.transformByJSONString(jsonString);
 console.log(interfaces);
 ```
+
+## Try it online
+
+you can try it online [here](https://wesmile2020.github.io/json2dts/)
