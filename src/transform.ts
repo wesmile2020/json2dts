@@ -62,12 +62,14 @@ export class JSON2Dts implements JSON2DtsType {
   }
 
   transformByJSONString(code: string): string {
+    this._nameIndices.clear();
     const json = JSON.parse(code);
     const node = this._createNode('Root', 'RootType', json);
     return node.toString();
   }
 
   transformByJSON(data: unknown): string {
+    this._nameIndices.clear();
     const node = this._createNode('Root', 'RootType', data);
     return node.toString();
   }
