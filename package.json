@@ -2,11 +2,15 @@
   "name": "convert_json2dts",
   "version": "1.0.0",
   "description": "a lib for converting JSON to TypeScript interfaces",
-  "keywords": ["json", "dts", "typescript interfaces"],
+  "keywords": [
+    "json",
+    "dts",
+    "typescript interfaces"
+  ],
   "homepage": "https://github.com/wesmile2020/convert_json2dts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wesmile2020/convert_json2dts.git"
+    "url": "git+https://github.com/wesmile2020/convert_json2dts.git"
   },
   "bugs": {
     "url": "https://github.com/wesmile2020/convert_json2dts/issues"
@@ -14,7 +18,9 @@
   "license": "MIT",
   "author": "lei.li",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
