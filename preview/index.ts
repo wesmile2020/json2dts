@@ -22,7 +22,7 @@ self.MonacoEnvironment = {
 const codeDom = document.getElementById('code')!;
 const jsonEditor = editor.create(codeDom, {
   language: 'json',
-  fontFamily: `'cascadia code' monospace`,
+  fontFamily: `'cascadia code', monospace`,
   minimap: {
     enabled: false,
   },
@@ -34,17 +34,22 @@ const outputDom = document.getElementById('output')!;
 const outputEditor = editor.create(outputDom, {
   readOnly: true,
   language: 'typescript',
-  fontFamily: `'cascadia code' monospace`,
+  fontFamily: `'cascadia code', monospace`,
   minimap: {
     enabled: false,
   },
   automaticLayout: true,
+  placeholder: 'Generated TypeScript interface code will appear here',
 });
 
 const json2Dts = new JSON2Dts();
 
 jsonEditor.onDidChangeModelContent(() => {
   const jsonCode = jsonEditor.getValue();
+  if (jsonCode === '') {
+    outputEditor.setValue('');
+    return;
+  }
   try {
     const json = JSON.parse(jsonCode);
     const tsCode = json2Dts.transformByJSON(json);
