@@ -10,35 +10,55 @@ npm install convert_json2dts
 
 ## Usage
 
+### Get TypeScript interfaces corresponding to JSON
+```typescript
+import { JSON2Dts } from 'convert_json2dts';
+
+const data = {
+  name: 'John',
+  age: 30,
+};
+
+const convert = new JSON2Dts();
+const interfaces = convert.transformByJSON(data);
+console.log(interfaces);
+// output:
+/*
+interface RootType {
+  name: string;
+  age: number;
+}
+*/
+
+// if you only have a json string you can use `transformByJSONString` method
+const jsonString = JSON.stringify(data);
+const interfaces_1 = JSON2Dts.transformByJSONString(jsonString);
+```
+
+### Get `.d.ts` code from a JSON file
 ```typescript
 import { JSON2Dts } from 'convert_json2dts';
 
 const json = {
   name: 'John',
   age: 30,
-  address: {
-    street: '123 Main St',
-    city: 'New York',
-    state: 'NY',
-    zip: '10001'
-  }
 };
 
 const convert = new JSON2Dts();
-const interfaces = convert.transformByJSON(json);
+const interfaces = convert.convertJSONToDts(json);
 console.log(interfaces);
-```
+// output:
+/*
+interface RootType {
+    name: string;
+    age: number;
+}
 
-If you only have a JSON string, you can use the `transformByJSONString` method
-
-```typescript
-import { JSON2Dts } from 'convert_json2dts';
-
-const jsonString = '{"name": "John", "age": 30, "address": {"street": "123 Main St", "city": "New York", "state": "NY", "zip": "10001"}}';
-
-const convert = new JSON2Dts();
-const interfaces = convert.transformByJSONString(jsonString);
-console.log(interfaces);
+declare const root: RootType;
+export default root;
+export const name = root.name;
+export const age = root.age;
+*/
 ```
 
 ## Try it online

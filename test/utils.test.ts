@@ -8,6 +8,7 @@ import {
   isNull,
   getWhitespace,
   firstLetterUpperCase,
+  isValidVariableName,
 } from '@/utils';
 
 test('test isObject', () => {
@@ -49,4 +50,11 @@ test('test getWhitespace', () => {
 test('test firstLetterUpperCase', () => {
   expect(firstLetterUpperCase('hello')).toBe('Hello');
   expect(firstLetterUpperCase('')).toBe('');
+});
+
+test('test isValidVariableName', () => {
+  expect(isValidVariableName('hello')).toBe(true);
+  expect(isValidVariableName('1hello')).toBe(false);
+  expect(isValidVariableName('hello world')).toBe(false);
+  expect(isValidVariableName('true')).toBe(false);
 });

@@ -7,6 +7,7 @@ import {
   isBoolean,
   firstLetterUpperCase,
   isNull,
+  isValidVariableName,
 } from './utils';
 import {
   InterfaceNode,
@@ -20,6 +21,9 @@ export class JSON2Dts implements JSON2DtsType {
 
   private _getUniqueName(key: string): string {
     let name = firstLetterUpperCase(key);
+    if (!isValidVariableName(name)) {
+      name = 'UnVariable';
+    }
     let count = 0;
     if (this._nameIndices.has(name)) {
       count = this._nameIndices.get(name)!;
@@ -61,16 +65,40 @@ export class JSON2Dts implements JSON2DtsType {
     return new PropertyNode(name, 'unknown');
   }
 
-  transformByJSONString(code: string): string {
-    this._nameIndices.clear();
-    const json = JSON.parse(code);
-    const node = this._createNode('Root', 'RootType', json);
-    return node.toString();
-  }
-
   transformByJSON(data: unknown): string {
     this._nameIndices.clear();
     const node = this._createNode('Root', 'RootType', data);
     return node.toString();
+  }
+
+  transformByJSONString(code: string): string {
+    const json = JSON.parse(code);
+    return this.transformByJSON(json);
+  }
+
+  convertJSONToDts(data: unknown): string {
+    let interfaces = this.transformByJSON(data);
+    const codes = [];
+    codes.push('declare const root: RootType;')
+    codes.push('export default root;');
+    if (isObject(data)) {
+      const keys = Object.keys(data);
+      for (let i = 0; i < keys.length; i += 1) {
+        if (isValidVariableName(keys[i])) {
+          codes.push(`export const ${keys[i]} = root.${keys[i]};`)
+        } else {
+          codes.push(`const unVariable_${i} = root['${keys[i]}'];`);
+          codes.push(`export { unVariable_${i} as '${keys[i]}' }`);
+        }
+      }
+    }
+    interfaces += codes.join('\n');
+
+    return interfaces;
+  }
+
+  convertJSONStringToDts(code: string): string {
+    const json = JSON.parse(code);
+    return this.convertJSONToDts(json);
   }
 }

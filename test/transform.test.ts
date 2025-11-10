@@ -5,7 +5,7 @@ import { JSON2Dts } from '@/transform';
 test('test JSON2Dts array', () => {
   const json = [1, 'a', true];
   const convert = new JSON2Dts();
-  const interfaces = `type RootType = [number, string, boolean];\n\n`;
+  const interfaces = `type RootType = (number | string | boolean)[];\n\n`;
   expect(convert.transformByJSON(json)).toBe(interfaces);
   const jsonCode = JSON.stringify(json);
   expect(convert.transformByJSONString(jsonCode)).toBe(interfaces);
@@ -55,4 +55,35 @@ interface RootType {
   expect(convert.transformByJSON(json)).toBe(interfaces);
   const jsonCode = JSON.stringify(json);
   expect(convert.transformByJSONString(jsonCode)).toBe(interfaces);
+});
+
+test('test JSON2dts object unVariable', () => {
+  const json = { '@': 1 };
+  const convert = new JSON2Dts();
+  const interfaces =
+`interface RootType {
+    '@': number;
+}\n\n`;
+  expect(convert.transformByJSON(json)).toBe(interfaces);
+  const jsonCode = JSON.stringify(json);
+  expect(convert.transformByJSONString(jsonCode)).toBe(interfaces);
+});
+
+test('test JSON2dts to dts', () => {
+  const json = { '@': 1, age: 22 };
+  const convert = new JSON2Dts();
+  const interfaces =
+`interface RootType {
+    '@': number;
+    age: number;
+}
+
+declare const root: RootType;
+export default root;
+const unVariable_0 = root['@'];
+export { unVariable_0 as '@' }
+export const age = root.age;`;
+  expect(convert.convertJSONToDts(json)).toBe(interfaces);
+  const jsonCode = JSON.stringify(json);
+  expect(convert.convertJSONStringToDts(jsonCode)).toBe(interfaces);
 });

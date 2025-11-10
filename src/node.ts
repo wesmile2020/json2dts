@@ -1,4 +1,4 @@
-import { getWhitespace } from './utils';
+import { getWhitespace, isValidVariableName } from './utils';
 
 export abstract class TreeNode {
   protected _children: TreeNode[] = [];
@@ -28,8 +28,11 @@ export class InterfaceNode extends TreeNode {
     for (let i = 0; i < this._children.length; i += 1) {
       const node = this._children[i]!;
       output += node.toString();
-
-      contents.push(`${getWhitespace(4)}${node.name}: ${node.type};`);
+      let name = node.name;
+      if (!isValidVariableName(node.name)) {
+        name = `'${node.name}'`;
+      }
+      contents.push(`${getWhitespace(4)}${name}: ${node.type};`);
     }
     return output + `interface ${this.type} {\n${contents.join('\n')}\n}\n\n`;
   }
@@ -46,10 +49,9 @@ export class ArrayNode extends TreeNode {
     for (let i = 0; i < this._children.length; i += 1) {
       const node = this._children[i]!;
       output += node.toString();
-
       contents.push(node.type);
     }
-    return output + `type ${this.type} = [${contents.join(', ')}];\n\n`;
+    return output + `type ${this.type} = (${contents.join(' | ') || 'unknown'})[];\n\n`;
   }
 }
 
