@@ -6,6 +6,16 @@
   <title>JSON2Dts</title>
 </head>
 <body>
+  <div class="operate">
+    <div class="select-container">
+      <sl-select id="mode"
+        value="interfaces"
+        label="Select a generate mode">
+        <sl-option value="interfaces">Generate Interfaces</sl-option>
+        <sl-option value="dts">Generate .d.ts</sl-option>
+      </sl-select>
+    </div>
+  </div>
   <div class="app">
     <div id="code"></div>
     <div id="output"></div>

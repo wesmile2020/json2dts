@@ -1,3 +1,6 @@
+import '@shoelace-style/shoelace/dist/shoelace.js';
+import '@shoelace-style/shoelace/dist/themes/light.css';
+
 import { editor } from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import JSONWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
@@ -42,9 +45,11 @@ const outputEditor = editor.create(outputDom, {
   placeholder: 'Generated TypeScript interface code will appear here',
 });
 
+const modeDom = document.getElementById('mode') as HTMLSelectElement;
+
 const json2Dts = new JSON2Dts();
 
-jsonEditor.onDidChangeModelContent(() => {
+function runTransform() {
   const jsonCode = jsonEditor.getValue();
   if (jsonCode === '') {
     outputEditor.setValue('');
@@ -52,9 +57,27 @@ jsonEditor.onDidChangeModelContent(() => {
   }
   try {
     const json = JSON.parse(jsonCode);
-    const tsCode = json2Dts.transformByJSON(json);
-    outputEditor.setValue(tsCode);
+    const mode = modeDom.value;
+    if (mode === 'interfaces') {
+      const tsCode = json2Dts.transformByJSON(json);
+      outputEditor.setValue(tsCode);
+    } else {
+      const tsCode = json2Dts.convertJSONToDts(json);
+      outputEditor.setValue(tsCode);
+    }
+
   } catch (error) {
 
   }
+}
+
+let runTimer: number | null = null;
+jsonEditor.onDidChangeModelContent(() => {
+  if (runTimer !== null) {
+    clearTimeout(runTimer);
+    runTimer = null;
+  }
+  runTimer = window.setTimeout(runTransform, 100);
 });
+
+modeDom.addEventListener('sl-change', runTransform);
