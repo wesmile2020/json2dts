@@ -1,6 +1,6 @@
 {
   "name": "convert_json2dts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a lib for converting JSON to TypeScript interfaces",
   "keywords": [
     "json",
