@@ -6,9 +6,14 @@ import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import JSONWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import typescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
-import { JSON2Dts } from '@/index';
+import { JSON2Dts, version } from '@/index';
 
 import './index.css';
+
+const versionDom = document.getElementById('version_name');
+if (versionDom) {
+  versionDom.textContent = version;
+}
 
 self.MonacoEnvironment = {
   getWorker(_moduleId: string, label: string) {
