@@ -48,7 +48,7 @@ export class JSON2Dts implements JSON2DtsType {
       const node = new ArrayNode(name, typeName);
       for (let i = 0; i < json.length; i += 1) {
         const itemTypeName = this._getUniqueName(`${typeName}_element_${i}`);
-        const child = this._createNode(`${name}_${i}`, itemTypeName, json[i]);
+        const child = this._createNode(name, itemTypeName, json[i]);
         node.addChild(child);
       }
       return node;
