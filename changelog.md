@@ -8,3 +8,6 @@
 
 ## 1.0.3
 - Optimize JSON array type and merge the same types in the array
+
+## 1.0.4
+- Fix syntax errors in the .d.ts file of the generated dts code

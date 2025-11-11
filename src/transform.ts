@@ -85,9 +85,9 @@ export class JSON2Dts implements JSON2DtsType {
       const keys = Object.keys(data);
       for (let i = 0; i < keys.length; i += 1) {
         if (isValidVariableName(keys[i])) {
-          codes.push(`export const ${keys[i]} = root.${keys[i]};`)
+          codes.push(`export declare const ${keys[i]}: RootType['${keys[i]}'];`)
         } else {
-          codes.push(`const unVariable_${i} = root['${keys[i]}'];`);
+          codes.push(`declare const unVariable_${i}: RootType['${keys[i]}'];`);
           codes.push(`export { unVariable_${i} as '${keys[i]}' }`);
         }
       }
