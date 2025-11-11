@@ -40,7 +40,7 @@ const jsonEditor = editor.create(codeDom, {
 
 const outputDom = document.getElementById('output')!;
 const outputEditor = editor.create(outputDom, {
-  readOnly: true,
+  readOnly: process.env.NODE_ENV === 'production',
   language: 'typescript',
   fontFamily: `'cascadia code', monospace`,
   minimap: {

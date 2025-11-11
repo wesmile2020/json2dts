@@ -15,13 +15,14 @@ html, body {
 
 .operate {
   height: var(--operate_height);
-  /*border: 1px solid #ccc;*/
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03),0 1px 6px -1px rgba(0, 0, 0, 0.02),0 2px 4px 0 rgba(0, 0, 0, 0.02);
   padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 100;
 }
 
 .version {
