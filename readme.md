@@ -56,8 +56,8 @@ interface RootType {
 
 declare const root: RootType;
 export default root;
-export const name = root.name;
-export const age = root.age;
+export declare const name: RootType['name'];
+export declare const age: RootType['age'];
 */
 ```
 
