@@ -31,6 +31,8 @@
     }
   },
   "scripts": {
+    "dev": "vite --config vite.config.preview.ts",
+    "build:preview": "vite build --config vite.config.preview.ts",
     "build": "vite build",
     "test": "vitest"
   },
@@ -43,5 +45,9 @@
   },
   "overrides": {
     "vite": "8.0.0-beta.0"
+  },
+  "dependencies": {
+    "@shoelace-style/shoelace": "^2.20.1",
+    "monaco-editor": "^0.54.0"
   }
 }
