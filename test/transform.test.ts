@@ -80,9 +80,9 @@ test('test JSON2dts to dts', () => {
 
 declare const root: RootType;
 export default root;
-const unVariable_0 = root['@'];
+declare const unVariable_0: RootType['@'];
 export { unVariable_0 as '@' }
-export const age = root.age;`;
+export declare const age: RootType['age'];`;
   expect(convert.convertJSONToDts(json)).toBe(interfaces);
   const jsonCode = JSON.stringify(json);
   expect(convert.convertJSONStringToDts(jsonCode)).toBe(interfaces);
