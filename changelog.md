@@ -11,3 +11,6 @@
 
 ## 1.0.4
 - Fix syntax errors in the .d.ts file of the generated dts code
+
+## 1.0.5
+- Add github actions for publish to npm registry
